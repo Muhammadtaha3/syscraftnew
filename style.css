@@ -199,7 +199,7 @@ p {
   color: var(--text-light);
   overflow: hidden;
 
-  background-image: url("images/hero_background.jpg");
+  background-image: url("test2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
