@@ -1,0 +1,792 @@
+/* Color Variables for easier management */
+:root {
+  --primary-bg-dark: #0d1117; /* Very dark background */
+  --secondary-bg-dark: #1a202c; /* Slightly lighter dark background for sections/header */
+  --card-bg-dark: #2d3748; /* Darker background for cards/forms */
+  --text-light: #e6e6e6; /* Light text color */
+  --text-medium: #a0aec0; /* Medium grey text color */
+  --accent-blue: #007bff; /* Primary blue accent color */
+  --accent-blue-hover: #0056b3; /* Darker blue on hover */
+  --accent-green: #28a745; /* Green for success/contact button */
+  --accent-green-hover: #218838; /* Darker green on hover */
+  --shadow-dark: rgba(0, 0, 0, 0.4);
+  --shadow-light: rgba(0, 0, 0, 0.2);
+  --glow-blue: rgba(0, 123, 255, 0.7); /* Blue glow for effects */
+  --glow-green: rgba(40, 167, 69, 0.7); /* Green glow for effects */
+  --tertiary-bg-dark: #12161e; /* Even darker background for alternating sections */
+}
+
+/* General Styling */
+body {
+  font-family: "Lato", sans-serif; /* Lato for body text */
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary-bg-dark); /* Fallback color */
+  color: var(--text-light);
+  line-height: 1.6;
+  direction: ltr;
+  scroll-behavior: smooth;
+
+  /* New background image properties */
+  background-image: url("/images/test2.jpg"); /* Replace with your image path */
+  background-size: cover; /* Covers the entire element, cropping if necessary */
+  background-position: center center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-attachment: fixed; /* Makes the background image fixed while scrolling */
+
+  position: relative; /* Needed for pseudo-element overlay */
+  z-index: 0; /* Ensures content is above this */
+}
+
+/* Pseudo-element for a subtle dark overlay on the background image */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ); /* Adjust opacity as needed (0.1 to 0.7) */
+  z-index: -1; /* Ensures the overlay is behind the body content */
+}
+
+/* Keyframes for subtle background animation (Removed if not used elsewhere) */
+/* @keyframes backgroundPan {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+} */
+
+/* Custom Scrollbar Styling (WebKit browsers like Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-bg-dark);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-blue);
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue-hover);
+}
+
+/* Text Selection Styling */
+::selection {
+  background: var(--accent-blue);
+  color: white;
+}
+::-moz-selection {
+  /* For Firefox */
+  background: var(--accent-blue);
+  color: white;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Poppins", sans-serif; /* Poppins for headings */
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+p {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Header Styling */
+.header {
+  background-color: var(--secondary-bg-dark);
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* Sticky Navbar Styling */
+.header.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(26, 32, 44, 0.95);
+  box-shadow: 0 5px 15px var(--shadow-dark); /* Enhanced shadow for sticky header */
+  padding: 10px 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-link {
+  display: inline-block;
+}
+
+.header .logo {
+  max-height: 65px; /* Slightly increased logo size */
+  width: auto;
+  vertical-align: middle;
+  filter: drop-shadow(
+    0 0 12px rgba(255, 255, 255, 0.5)
+  ); /* Stronger glow for logo */
+  transition: max-height 0.3s ease;
+}
+
+.header.sticky .logo {
+  max-height: 45px; /* Smaller logo when sticky */
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.navbar ul li {
+  margin-left: 30px; /* Increased spacing between nav items */
+}
+
+.navbar ul li:first-child {
+  margin-left: 0;
+}
+
+.navbar a {
+  color: var(--text-medium);
+  text-decoration: none;
+  font-size: 1.15em;
+  font-weight: 700; /* Bold from Lato font */
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: var(--accent-blue); /* Blue on hover */
+}
+
+/* Hero Section Styling */
+.hero-section {
+  position: relative;
+  height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-light);
+  overflow: hidden;
+
+  background-image: url("images/hero_background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0.55)
+  ); /* Slightly darker overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.hero-content-wrapper {
+  position: relative;
+  z-index: 2;
+  padding: 30px; /* Increased padding */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.35
+  ); /* Slightly less transparent background for content */
+  border-radius: 20px; /* More rounded corners */
+  box-shadow: 0 10px 25px var(--shadow-dark); /* Enhanced shadow */
+  max-width: 85%; /* Slightly wider content block */
+}
+
+.hero-logo {
+  display: none; /* Hides the extra logo in hero section */
+}
+
+.hero-section h1 {
+  font-size: 4em; /* Larger heading */
+  margin-bottom: 25px;
+  line-height: 1.2;
+  text-shadow: 3px 3px 6px var(--shadow-dark); /* Stronger text shadow */
+}
+
+.hero-section p {
+  font-size: 1.4em; /* Larger paragraph text */
+  margin-bottom: 45px; /* More space below paragraph */
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 2px 2px 4px var(--shadow-dark);
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: var(--accent-blue);
+  color: white;
+  padding: 20px 45px; /* Larger padding */
+  text-decoration: none;
+  border-radius: 12px; /* More rounded corners */
+  font-size: 1.3em; /* Larger font size */
+  font-weight: 700; /* Bold font */
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5); /* Enhanced shadow for button */
+  animation: pulseBlue 2s infinite ease-in-out; /* Subtle pulse animation */
+}
+
+/* Keyframes for button pulse animation */
+@keyframes pulseBlue {
+  0% {
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba(0, 123, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+  }
+}
+
+.cta-button:hover {
+  background-color: var(--accent-blue-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 123, 255, 0.7);
+  animation: none; /* Stop pulse on hover */
+}
+
+/* Section Common Styling */
+.services-section,
+.why-us-section,
+.contact-section,
+.projects-section {
+  /* Added .projects-section */
+  padding: 100px 0; /* Increased section padding */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative; /* Needed for pseudo-elements */
+  overflow: hidden; /* Hide overflow from subtle patterns */
+}
+
+/* Alternating background colors for sections */
+.projects-section {
+  background-color: var(
+    --primary-bg-dark
+  ); /* Distinct background for projects */
+}
+
+.services-section {
+  background-color: var(--secondary-bg-dark);
+}
+
+.why-us-section {
+  background-color: var(--primary-bg-dark); /* Alternating background */
+}
+
+.contact-section {
+  background-color: var(--secondary-bg-dark); /* Alternating background */
+}
+
+/* Subtle pattern overlay for main content sections */
+.services-section::before,
+.why-us-section::before,
+.contact-section::before,
+.projects-section::before {
+  /* Added .projects-section */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Using a subtle dots pattern. You might replace this with a circuit board or abstract pattern. */
+  background-image: url('data:image/svg+xml,%3Csvg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="1" cy="1" r="1" fill="%23FFFFFF" opacity="0.03"%3E%3C/circle%3E%3C/svg%3E');
+  background-repeat: repeat;
+  opacity: 0.8; /* Control visibility of the pattern */
+  z-index: 0; /* Keep it behind content */
+  pointer-events: none; /* Ensure it doesn't interfere with clicks */
+}
+
+/* Ensure content is above the pseudo-element pattern */
+.services-section .container,
+.why-us-section .container,
+.contact-section .container,
+.projects-section .container {
+  /* Added .projects-section */
+  position: relative;
+  z-index: 1;
+}
+
+.services-section h2,
+.why-us-section h2,
+.contact-section h2,
+.projects-section h2 {
+  /* Added .projects-section */
+  font-size: 3.2em; /* Larger section headings */
+  margin-bottom: 60px; /* More space below headings */
+  color: var(--text-light);
+  position: relative;
+  padding-bottom: 15px; /* Space for underline */
+}
+
+.services-section h2::after,
+.why-us-section h2::after,
+.contact-section h2::after,
+.projects-section h2::after {
+  /* Added .projects-section */
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100px; /* Wider underline */
+  height: 5px; /* Thicker underline */
+  background-color: var(--accent-blue);
+  border-radius: 3px;
+}
+
+/* Grid Layout for Services and Why Us */
+.services-grid,
+.why-us-grid,
+.projects-grid {
+  /* Added .projects-grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px; /* Increased gap */
+  margin-top: 50px;
+}
+
+.service-card,
+.why-us-card,
+.project-card {
+  /* Added .project-card */
+  background: var(--card-bg-dark);
+  padding: 40px; /* Increased padding */
+  border-radius: 20px; /* More rounded corners */
+  box-shadow: 0 8px 20px var(--shadow-light); /* Enhanced shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  text-align: center;
+  border: 2px solid transparent; /* Transparent border for hover effect */
+}
+
+.service-card:hover,
+.why-us-card:hover,
+.project-card:hover {
+  /* Added .project-card */
+  transform: translateY(-15px); /* More pronounced lift effect on hover */
+  box-shadow: 0 15px 30px var(--shadow-dark); /* Stronger shadow on hover */
+  border-color: var(--accent-blue); /* Blue border on hover */
+}
+
+.service-card i,
+.why-us-card i {
+  font-size: 4em; /* Larger icons */
+  margin-bottom: 30px; /* More space below icons */
+  color: var(--accent-blue);
+  text-shadow: 0 0 15px rgba(0, 123, 255, 0.8); /* Stronger glow for icons */
+}
+
+.service-card h3,
+.why-us-card h3,
+.project-card h3 {
+  /* Added .project-card */
+  font-size: 2em; /* Larger card headings */
+  margin-bottom: 18px;
+  color: var(--text-light);
+}
+
+.service-card p,
+.why-us-card p,
+.project-card p {
+  /* Added .project-card */
+  font-size: 1.05em; /* Slightly larger card text */
+  color: var(--text-medium);
+}
+
+/* Project Card Specific Styling */
+.project-card img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.project-card .project-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.project-card .project-link:hover {
+  color: var(--accent-blue-hover);
+  transform: translateX(5px); /* Slight slide effect on hover */
+}
+
+.project-card .project-link i {
+  font-size: 0.9em; /* Smaller arrow icon */
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.project-card .project-link:hover i {
+  transform: translateX(5px);
+}
+
+/* Contact Section Styling */
+.contact-section {
+  background-color: var(
+    --secondary-bg-dark
+  ); /* Changed to secondary-bg-dark for alternating effect */
+}
+
+.contact-section p {
+  max-width: 700px;
+  margin: 0 auto 50px auto; /* More space below paragraph */
+  color: var(--text-medium);
+}
+
+.contact-form {
+  max-width: 650px; /* Slightly wider form */
+  margin: 0 auto;
+  background: var(--card-bg-dark);
+  padding: 50px; /* Increased padding */
+  border-radius: 20px; /* More rounded corners */
+  box-shadow: 0 10px 25px var(--shadow-dark); /* Enhanced shadow */
+  text-align: left;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: calc(100% - 30px); /* Adjust width for padding */
+  padding: 18px; /* Larger padding for inputs */
+  margin-bottom: 25px; /* More space below inputs */
+  border: 1px solid #4a5568;
+  border-radius: 10px; /* More rounded corners for inputs */
+  background-color: var(--secondary-bg-dark);
+  color: var(--text-light);
+  font-size: 1.05em; /* Slightly larger font size */
+  box-sizing: border-box;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--text-medium);
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.contact-form .cta-button {
+  width: 100%;
+  padding: 20px;
+  font-size: 1.3em;
+  background-color: var(--accent-green); /* Green button for submit */
+  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.5); /* Enhanced shadow */
+  animation: pulseGreen 2s infinite ease-in-out; /* Subtle pulse animation */
+  position: relative; /* For loading spinner */
+  overflow: hidden; /* Hide spinner overflow */
+}
+
+/* Keyframes for green button pulse animation */
+@keyframes pulseGreen {
+  0% {
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.5);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba(40, 167, 69, 0.8);
+  }
+  100% {
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.5);
+  }
+}
+
+.contact-form .cta-button:hover {
+  background-color: var(--accent-green-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(40, 167, 69, 0.7);
+  animation: none; /* Stop pulse on hover */
+}
+
+/* Loading Spinner for button */
+.cta-button .spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease;
+}
+
+.cta-button.loading .spinner {
+  opacity: 1; /* Show spinner when loading */
+}
+
+.cta-button.loading {
+  cursor: not-allowed;
+  pointer-events: none; /* Disable clicks during loading */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer Styling */
+.footer {
+  background-color: var(--secondary-bg-dark);
+  color: var(--text-medium);
+  text-align: center;
+  padding: 30px 0; /* Increased padding */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-icons {
+  margin-top: 20px; /* Space above social icons */
+}
+
+.social-icons a {
+  color: var(--text-medium); /* Default icon color */
+  font-size: 1.8em; /* Icon size */
+  margin: 0 15px; /* Spacing between icons */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-icons a:hover {
+  color: var(--accent-blue); /* Blue on hover */
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+/* Specific social icon colors on hover for a branded feel (optional) */
+.social-icons a .fa-facebook-f:hover {
+  color: #1877f2; /* Facebook blue */
+}
+.social-icons a .fa-x-twitter:hover {
+  color: #1da1f2; /* Twitter blue */
+}
+.social-icons a .fa-linkedin-in:hover {
+  color: #0a66c2; /* LinkedIn blue */
+}
+
+/* Custom Message Modal Styling */
+.message-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px); /* Optional: blur background */
+}
+
+.modal-content {
+  background-color: var(--card-bg-dark);
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 30px;
+  border: 1px solid var(--accent-blue);
+  border-radius: 15px;
+  width: 80%; /* Could be more responsive */
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 10px 30px var(--shadow-dark);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content.success {
+  border-color: var(--accent-green);
+}
+
+.modal-content.error {
+  border-color: #dc3545; /* Red for error */
+}
+
+.modal-content p {
+  font-size: 1.2em;
+  color: var(--text-light);
+  margin-bottom: 0;
+}
+
+.close-button {
+  color: var(--text-medium);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: var(--text-light);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar {
+    margin-top: 15px;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar ul li {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  .hero-section h1 {
+    font-size: 2.8em; /* Adjusted for smaller screens */
+  }
+
+  .hero-section p {
+    font-size: 1.1em; /* Adjusted for smaller screens */
+  }
+
+  .cta-button {
+    padding: 15px 30px;
+    font-size: 1.1em;
+  }
+
+  .services-section h2,
+  .why-us-section h2,
+  .contact-section h2,
+  .projects-section h2 {
+    /* Added .projects-section */
+    font-size: 2.5em;
+  }
+
+  .services-grid,
+  .why-us-grid,
+  .projects-grid {
+    /* Added .projects-grid */
+    grid-template-columns: 1fr;
+  }
+
+  .service-card,
+  .why-us-card,
+  .project-card {
+    /* Added .project-card */
+    padding: 30px;
+  }
+
+  .service-card i,
+  .why-us-card i {
+    font-size: 3.5em;
+  }
+
+  .service-card h3,
+  .why-us-card h3,
+  .project-card h3 {
+    /* Added .project-card */
+    font-size: 1.6em;
+  }
+
+  .contact-form {
+    padding: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header .logo {
+    max-height: 40px;
+  }
+
+  .hero-section {
+    height: auto;
+    padding: 60px 0;
+  }
+
+  .hero-content-wrapper {
+    padding: 25px 10px;
+  }
+
+  .hero-section h1 {
+    font-size: 2.2em;
+  }
+
+  .hero-section p {
+    font-size: 0.95em;
+  }
+
+  .social-icons a {
+    font-size: 1.5em; /* Smaller icons on very small screens */
+    margin: 0 10px;
+  }
+}
