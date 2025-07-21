@@ -28,7 +28,8 @@ body {
   scroll-behavior: smooth;
 
   /* New background image properties */
-  background-image: url("test2.jpg"); /* Replace with your image path */
+  /* تأكد من أن المسار هنا صحيح ويشير إلى الصورة الفعلية في مجلد images */
+  background-image: url("test2.jpg"); /* Replace with your actual image path */
   background-size: cover; /* Covers the entire element, cropping if necessary */
   background-position: center center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents the image from repeating */
@@ -50,20 +51,10 @@ body::before {
     0,
     0,
     0,
-    0.1
+    0.4
   ); /* Adjust opacity as needed (0.1 to 0.7) */
   z-index: -1; /* Ensures the overlay is behind the body content */
 }
-
-/* Keyframes for subtle background animation (Removed if not used elsewhere) */
-/* @keyframes backgroundPan {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 100% 100%;
-  }
-} */
 
 /* Custom Scrollbar Styling (WebKit browsers like Chrome, Safari) */
 ::-webkit-scrollbar {
@@ -96,6 +87,7 @@ body::before {
   color: white;
 }
 
+/* General Utilities */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -103,6 +95,7 @@ body::before {
   padding: 0 15px;
 }
 
+/* Global Heading and Paragraph Styles */
 h1,
 h2,
 h3 {
@@ -125,6 +118,7 @@ p {
   z-index: 1000;
   width: 100%;
   transition: all 0.3s ease;
+  position: relative; /* مهم عشان overlay وممكن الـ side menu */
 }
 
 /* Sticky Navbar Styling */
@@ -139,7 +133,7 @@ p {
 
 .header-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* To position logo and hamburger */
   align-items: center;
 }
 
@@ -159,6 +153,42 @@ p {
 
 .header.sticky .logo {
   max-height: 45px; /* Smaller logo when sticky */
+}
+
+/* Hamburger Menu Icon */
+.hamburger-menu {
+  display: none; /* Hidden by default, shown on smaller screens */
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: var(--text-light);
+  cursor: pointer;
+  z-index: 1100; /* Higher than sticky header */
+  transition: color 0.3s ease;
+}
+
+.hamburger-menu:hover {
+  color: var(--accent-blue);
+}
+
+/* Overlay for Side Navbar */
+.overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+  z-index: 999; /* Below side navbar, above content */
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+  display: block; /* Show overlay */
+  opacity: 1;
 }
 
 .navbar ul {
@@ -199,7 +229,7 @@ p {
   color: var(--text-light);
   overflow: hidden;
 
-  background-image: url("test2.jpg");
+  background-image: url("test2.jpg"); /* Hero background image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -297,7 +327,6 @@ p {
 .why-us-section,
 .contact-section,
 .projects-section {
-  /* Added .projects-section */
   padding: 100px 0; /* Increased section padding */
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   position: relative; /* Needed for pseudo-elements */
@@ -328,14 +357,12 @@ p {
 .why-us-section::before,
 .contact-section::before,
 .projects-section::before {
-  /* Added .projects-section */
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  /* Using a subtle dots pattern. You might replace this with a circuit board or abstract pattern. */
   background-image: url('data:image/svg+xml,%3Csvg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="1" cy="1" r="1" fill="%23FFFFFF" opacity="0.03"%3E%3C/circle%3E%3C/svg%3E');
   background-repeat: repeat;
   opacity: 0.8; /* Control visibility of the pattern */
@@ -348,7 +375,6 @@ p {
 .why-us-section .container,
 .contact-section .container,
 .projects-section .container {
-  /* Added .projects-section */
   position: relative;
   z-index: 1;
 }
@@ -357,7 +383,6 @@ p {
 .why-us-section h2,
 .contact-section h2,
 .projects-section h2 {
-  /* Added .projects-section */
   font-size: 3.2em; /* Larger section headings */
   margin-bottom: 60px; /* More space below headings */
   color: var(--text-light);
@@ -369,7 +394,6 @@ p {
 .why-us-section h2::after,
 .contact-section h2::after,
 .projects-section h2::after {
-  /* Added .projects-section */
   content: "";
   position: absolute;
   left: 50%;
@@ -385,7 +409,6 @@ p {
 .services-grid,
 .why-us-grid,
 .projects-grid {
-  /* Added .projects-grid */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px; /* Increased gap */
@@ -395,7 +418,6 @@ p {
 .service-card,
 .why-us-card,
 .project-card {
-  /* Added .project-card */
   background: var(--card-bg-dark);
   padding: 40px; /* Increased padding */
   border-radius: 20px; /* More rounded corners */
@@ -408,7 +430,6 @@ p {
 .service-card:hover,
 .why-us-card:hover,
 .project-card:hover {
-  /* Added .project-card */
   transform: translateY(-15px); /* More pronounced lift effect on hover */
   box-shadow: 0 15px 30px var(--shadow-dark); /* Stronger shadow on hover */
   border-color: var(--accent-blue); /* Blue border on hover */
@@ -425,7 +446,6 @@ p {
 .service-card h3,
 .why-us-card h3,
 .project-card h3 {
-  /* Added .project-card */
   font-size: 2em; /* Larger card headings */
   margin-bottom: 18px;
   color: var(--text-light);
@@ -434,7 +454,6 @@ p {
 .service-card p,
 .why-us-card p,
 .project-card p {
-  /* Added .project-card */
   font-size: 1.05em; /* Slightly larger card text */
   color: var(--text-medium);
 }
@@ -693,22 +712,64 @@ p {
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-content {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row; /* رجّعهم لـ row عشان زر الهامبرغر يكون جنب اللوجو */
+    justify-content: space-between; /* وزعهم */
+    align-items: center; /* وسّطهم رأسيًا */
+  }
+
+  .hamburger-menu {
+    display: block; /* اظهر زر الهامبرغر */
   }
 
   .navbar {
-    margin-top: 15px;
+    position: fixed;
+    top: 0;
+    right: -250px; /* اخفيه على اليمين - عرض القائمة 250px */
+    width: 250px; /* عرض الـ side navbar */
+    height: 100%;
+    background-color: var(--secondary-bg-dark); /* لون خلفية الـ side navbar */
+    padding-top: 80px; /* مسافة من فوق عشان اللوجو/الزرار */
+    box-shadow: -5px 0 15px var(--shadow-dark);
+    transition: right 0.3s ease-in-out; /* حركة فتح/غلق سلسة */
+    z-index: 1000; /* فوق الـ overlay */
+    overflow-y: auto; /* لو المحتوى كتير */
+  }
+
+  .navbar.active {
+    right: 0; /* ظهره لما يبقى active */
   }
 
   .navbar ul {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* رجّع العناصر لليسار */
+    width: 100%;
   }
 
   .navbar ul li {
-    margin-left: 0;
-    margin-bottom: 10px;
+    margin: 0; /* شيل المسافات الأفقية */
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* خط فاصل بين العناصر */
+  }
+
+  .navbar ul li:last-child {
+    border-bottom: none;
+  }
+
+  .navbar a {
+    display: block; /* خلي الروابط تأخذ المساحة كلها للضغط عليها بسهولة */
+    padding: 15px 20px; /* مسافة داخلية للروابط */
+    font-size: 1.2em; /* كبّر الخط شوية */
+    color: var(--text-light); /* خلي لون الروابط أفتح في الـ side navbar */
+  }
+
+  .navbar a:hover {
+    background-color: var(--card-bg-dark); /* غير الخلفية عند الـ hover */
+    color: var(--accent-blue);
+  }
+
+  /* Prevent scrolling when the side menu is open */
+  body.no-scroll {
+    overflow: hidden;
   }
 
   .hero-section h1 {
@@ -728,21 +789,18 @@ p {
   .why-us-section h2,
   .contact-section h2,
   .projects-section h2 {
-    /* Added .projects-section */
     font-size: 2.5em;
   }
 
   .services-grid,
   .why-us-grid,
   .projects-grid {
-    /* Added .projects-grid */
     grid-template-columns: 1fr;
   }
 
   .service-card,
   .why-us-card,
   .project-card {
-    /* Added .project-card */
     padding: 30px;
   }
 
@@ -754,7 +812,6 @@ p {
   .service-card h3,
   .why-us-card h3,
   .project-card h3 {
-    /* Added .project-card */
     font-size: 1.6em;
   }
 
