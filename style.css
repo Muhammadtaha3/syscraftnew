@@ -28,7 +28,7 @@ body {
   scroll-behavior: smooth;
 
   /* New background image properties */
-  background-image: url("/images/test2.jpg"); /* Replace with your image path */
+  background-image: url("test2.jpg"); /* Replace with your image path */
   background-size: cover; /* Covers the entire element, cropping if necessary */
   background-position: center center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents the image from repeating */
