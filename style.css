@@ -1,45 +1,84 @@
 /* Color Variables for easier management */
 :root {
-  --primary-bg-dark: #0d1117; /* Very dark background */
-  --secondary-bg-dark: #1a202c; /* Slightly lighter dark background for sections/header */
-  --card-bg-dark: #2d3748; /* Darker background for cards/forms */
-  --text-light: #e6e6e6; /* Light text color */
-  --text-medium: #a0aec0; /* Medium grey text color */
-  --accent-blue: #007bff; /* Primary blue accent color */
-  --accent-blue-hover: #0056b3; /* Darker blue on hover */
+  /* Base Dark Mode Colors */
+  --dark-primary-bg: #0d1117; /* Very dark background */
+  --dark-secondary-bg: #1a202c; /* Slightly lighter dark background for sections/header */
+  --dark-card-bg: #2d3748; /* Darker background for cards/forms */
+  --dark-text-light: #e6e6e6; /* Light text color */
+  --dark-text-medium: #a0aec0; /* Medium grey text color */
+  --dark-shadow-dark: rgba(0, 0, 0, 0.4);
+  --dark-shadow-light: rgba(0, 0, 0, 0.2);
+  --dark-glow-blue: rgba(0, 123, 255, 0.7);
+  --dark-glow-green: rgba(40, 167, 69, 0.7);
+  --dark-tertiary-bg: #12161e; /* Even darker background for alternating sections */
+
+  /* Light Mode Colors - NEW (Aligned with Logo) */
+  --light-primary-bg: #ffffff; /* White background */
+  --light-secondary-bg: #f0f2f5; /* Light grey for sections/header (lighter than card) */
+  --light-card-bg: #e6e9ee; /* Light grey for cards/forms (darker than secondary) */
+  --light-text-light: #212529; /* Very dark grey/black text */
+  --light-text-medium: #6c757d; /* Medium dark grey text */
+  --light-shadow-dark: rgba(0, 0, 0, 0.15);
+  --light-shadow-light: rgba(0, 0, 0, 0.08);
+  --light-glow-blue: rgba(0, 123, 255, 0.2);
+  --light-glow-green: rgba(40, 167, 69, 0.2);
+  --light-tertiary-bg: #e0e4eb; /* Even lighter background for alternating sections */
+
+  /* Accent Colors (aligned with logo, consistent across themes) */
+  --accent-blue: #548cff; /* Primary blue accent color (from logo) */
+  --accent-blue-hover: #3366cc; /* Darker blue on hover */
   --accent-green: #28a745; /* Green for success/contact button */
   --accent-green-hover: #218838; /* Darker green on hover */
-  --shadow-dark: rgba(0, 0, 0, 0.4);
-  --shadow-light: rgba(0, 0, 0, 0.2);
-  --glow-blue: rgba(0, 123, 255, 0.7); /* Blue glow for effects */
-  --glow-green: rgba(40, 167, 69, 0.7); /* Green glow for effects */
-  --tertiary-bg-dark: #12161e; /* Even darker background for alternating sections */
+
+  /* CURRENT THEME COLORS - These are the variables used throughout the CSS */
+  --primary-bg: var(--dark-primary-bg);
+  --secondary-bg: var(--dark-secondary-bg);
+  --card-bg: var(--dark-card-bg);
+  --text-light: var(--dark-text-light);
+  --text-medium: var(--dark-text-medium);
+  --shadow-dark: var(--dark-shadow-dark);
+  --shadow-light: var(--dark-shadow-light);
+  --glow-blue: var(--dark-glow-blue);
+  --glow-green: var(--dark-glow-green);
+  --tertiary-bg: var(--dark-tertiary-bg);
+}
+
+/* Light Mode specific variables override */
+body.light-mode {
+  --primary-bg: var(--light-primary-bg);
+  --secondary-bg: var(--light-secondary-bg);
+  --card-bg: var(--light-card-bg);
+  --text-light: var(--light-text-light);
+  --text-medium: var(--light-text-medium);
+  --shadow-dark: var(--light-shadow-dark);
+  --shadow-light: var(--light-shadow-light);
+  --glow-blue: var(--light-glow-blue);
+  --glow-green: var(--light-glow-green);
+  --tertiary-bg: var(--light-tertiary-bg);
+  color: var(--light-text-light); /* Apply main text color from light theme */
 }
 
 /* General Styling */
 body {
-  font-family: "Lato", sans-serif; /* Lato for body text */
+  font-family: "Lato", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: var(--primary-bg-dark); /* Fallback color */
+  background-color: var(--primary-bg);
   color: var(--text-light);
   line-height: 1.6;
   direction: ltr;
   scroll-behavior: smooth;
-
-  /* New background image properties */
-  /* تأكد من أن المسار هنا صحيح ويشير إلى الصورة الفعلية في مجلد images */
-  background-image: url("test2.jpg"); /* Replace with your actual image path */
-  background-size: cover; /* Covers the entire element, cropping if necessary */
-  background-position: center center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  background-attachment: fixed; /* Makes the background image fixed while scrolling */
-
-  position: relative; /* Needed for pseudo-element overlay */
-  z-index: 0; /* Ensures content is above this */
+  background-image: url("images/your_primary_site_background.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  z-index: 0;
+  transition: background-color 0.5s ease, color 0.5s ease; /* Smooth theme transition */
 }
 
-/* Pseudo-element for a subtle dark overlay on the background image */
+/* Pseudo-element for a subtle dark/light overlay on the background image */
 body::before {
   content: "";
   position: absolute;
@@ -47,22 +86,26 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.4
-  ); /* Adjust opacity as needed (0.1 to 0.7) */
-  z-index: -1; /* Ensures the overlay is behind the body content */
+  background-color: rgba(0, 0, 0, 0.4); /* Default dark overlay */
+  z-index: -1;
 }
 
-/* Custom Scrollbar Styling (WebKit browsers like Chrome, Safari) */
+body.light-mode::before {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.4
+  ); /* Lighter overlay for light mode */
+}
+
+/* Custom Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--primary-bg-dark);
+  background: var(--primary-bg);
   border-radius: 5px;
 }
 
@@ -82,7 +125,6 @@ body::before {
   color: white;
 }
 ::-moz-selection {
-  /* For Firefox */
   background: var(--accent-blue);
   color: white;
 }
@@ -99,96 +141,93 @@ body::before {
 h1,
 h2,
 h3 {
-  font-family: "Poppins", sans-serif; /* Poppins for headings */
+  font-family: "Poppins", sans-serif;
   color: var(--text-light);
   text-align: center;
   margin-bottom: 20px;
+  letter-spacing: 0.5px; /* Added for subtle elegance */
 }
 
 p {
   text-align: center;
   margin-bottom: 15px;
+  line-height: 1.8; /* Ensure good readability for paragraphs */
 }
 
 /* Header Styling */
 .header {
-  background-color: var(--secondary-bg-dark);
+  background-color: var(--secondary-bg);
   padding: 20px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 1000;
   width: 100%;
-  transition: all 0.3s ease;
-  position: relative; /* مهم عشان overlay وممكن الـ side menu */
+  position: relative;
+  display: flex; /* Use flexbox for header content */
+  align-items: center;
+  justify-content: space-between; /* Distribute items */
+  transition: background-color 0.5s ease, color 0.5s ease,
+    border-bottom 0.5s ease;
+}
+body.light-mode .header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Sticky Navbar Styling */
 .header.sticky {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(26, 32, 44, 0.95);
-  box-shadow: 0 5px 15px var(--shadow-dark); /* Enhanced shadow for sticky header */
+  background-color: var(
+    --secondary-bg
+  ); /* will be semi-transparent in JS via data-theme on sticky */
+  box-shadow: 0 5px 15px var(--shadow-dark);
   padding: 10px 0;
+}
+body.light-mode .header.sticky {
+  box-shadow: 0 5px 15px var(--light-shadow-dark);
 }
 
 .header-content {
   display: flex;
-  justify-content: space-between; /* To position logo and hamburger */
   align-items: center;
+  width: 100%; /* Make content wrapper take full width */
+  justify-content: space-between; /* Space between logo/nav/toggle */
 }
 
 .logo-link {
   display: inline-block;
+  flex-shrink: 0; /* Prevent logo from shrinking */
 }
 
 .header .logo {
-  max-height: 65px; /* Slightly increased logo size */
+  max-height: 65px;
   width: auto;
   vertical-align: middle;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.5));
+  transition: max-height 0.3s ease, filter 0.5s ease;
+}
+body.light-mode .header .logo {
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.2));
+}
+
+.header .logo:hover {
+  transform: scale(1.02); /* Slight scale up */
   filter: drop-shadow(
-    0 0 12px rgba(255, 255, 255, 0.5)
-  ); /* Stronger glow for logo */
-  transition: max-height 0.3s ease;
+    0 0 15px var(--glow-blue)
+  ); /* Slightly more intense glow */
 }
 
 .header.sticky .logo {
-  max-height: 45px; /* Smaller logo when sticky */
+  max-height: 45px;
 }
 
-/* Hamburger Menu Icon */
-.hamburger-menu {
-  display: none; /* Hidden by default, shown on smaller screens */
-  background: none;
-  border: none;
-  font-size: 2em;
-  color: var(--text-light);
-  cursor: pointer;
-  z-index: 1100; /* Higher than sticky header */
-  transition: color 0.3s ease;
-}
-
-.hamburger-menu:hover {
-  color: var(--accent-blue);
-}
-
-/* Overlay for Side Navbar */
-.overlay {
-  display: none; /* Hidden by default */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
-  z-index: 999; /* Below side navbar, above content */
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.overlay.active {
-  display: block; /* Show overlay */
-  opacity: 1;
+/* Main Navigation (Navbar) */
+.navbar {
+  flex-grow: 1; /* Allow navbar to take available space */
+  display: flex;
+  justify-content: center; /* Center the navigation items */
+  align-items: center;
+  margin: 0 20px; /* Some horizontal margin to separate from logo/toggle */
+  transition: background-color 0.5s ease;
 }
 
 .navbar ul {
@@ -199,7 +238,7 @@ p {
 }
 
 .navbar ul li {
-  margin-left: 30px; /* Increased spacing between nav items */
+  margin: 0 25px; /* Increased spacing between nav items */
 }
 
 .navbar ul li:first-child {
@@ -210,12 +249,76 @@ p {
   color: var(--text-medium);
   text-decoration: none;
   font-size: 1.15em;
-  font-weight: 700; /* Bold from Lato font */
+  font-weight: 700;
   transition: color 0.3s ease;
 }
 
 .navbar a:hover {
-  color: var(--accent-blue); /* Blue on hover */
+  color: var(--accent-blue);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+  background: none;
+  border: none;
+  font-size: 1.5em; /* Icon size */
+  color: var(--text-medium); /* Icon color */
+  cursor: pointer;
+  margin-left: auto; /* Push to the right (overrides general margin if navbar is not flex-grow:1) */
+  padding: 5px; /* Internal padding */
+  flex-shrink: 0; /* Prevent from shrinking */
+  transition: color 0.3s ease;
+}
+.theme-toggle-button:hover {
+  color: var(--accent-blue);
+}
+/* Ensure the correct icon color in light mode */
+body.light-mode .theme-toggle-button {
+  color: var(--light-text-medium);
+}
+body.light-mode .theme-toggle-button:hover {
+  color: var(--accent-blue);
+}
+
+/* Hamburger Menu Icon (For Mobile) */
+.hamburger-menu {
+  display: none; /* Hidden by default */
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: var(--text-light);
+  cursor: pointer;
+  z-index: 1100;
+  padding: 0;
+  margin-left: 15px; /* Space from theme toggle on mobile */
+  flex-shrink: 0; /* Prevent from shrinking */
+  transition: color 0.3s ease;
+}
+.hamburger-menu:hover {
+  color: var(--accent-blue);
+}
+body.light-mode .hamburger-menu {
+  color: var(--light-text-light);
+}
+
+/* Overlay for Side Navbar (Mobile) */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+  display: block;
+  opacity: 1;
 }
 
 /* Hero Section Styling */
@@ -228,11 +331,20 @@ p {
   text-align: center;
   color: var(--text-light);
   overflow: hidden;
+}
 
-  background-image: url("test2.jpg"); /* Hero background image */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.hero-video-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  object-fit: cover; /* This makes the video stretch to cover the entire container */
+  pointer-events: none;
 }
 
 .hero-overlay {
@@ -243,83 +355,136 @@ p {
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.75),
-    rgba(0, 0, 0, 0.55)
-  ); /* Slightly darker overlay */
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.4)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
 }
+/* Adjust overlay for light mode if it should also be light over video */
+body.light-mode .hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.1)
+  );
+}
 
 .hero-content-wrapper {
   position: relative;
   z-index: 2;
-  padding: 30px; /* Increased padding */
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.35
-  ); /* Slightly less transparent background for content */
-  border-radius: 20px; /* More rounded corners */
-  box-shadow: 0 10px 25px var(--shadow-dark); /* Enhanced shadow */
-  max-width: 85%; /* Slightly wider content block */
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px var(--shadow-dark);
+  max-width: 85%;
+}
+body.light-mode .hero-content-wrapper {
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 5px 15px var(--light-shadow-dark);
 }
 
-.hero-logo {
-  display: none; /* Hides the extra logo in hero section */
+/* New: SYSCRAFT Technology branding in hero section */
+.syscraft-branding {
+  font-family: "Poppins", sans-serif;
+  font-size: 6em; /* Larger than h1/h2 */
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text-light);
+  text-shadow: 4px 4px 8px var(--shadow-dark);
+  line-height: 1;
+  letter-spacing: 2px;
+}
+body.light-mode .syscraft-branding {
+  color: var(--light-text-light);
+  text-shadow: 2px 2px 4px var(--light-shadow-dark);
 }
 
 .hero-section h1 {
-  font-size: 4em; /* Larger heading */
+  font-size: 3.5em; /* Adjusted to be slightly smaller than the new branding text */
   margin-bottom: 25px;
-  line-height: 1.2;
-  text-shadow: 3px 3px 6px var(--shadow-dark); /* Stronger text shadow */
+  line-height: 1.15; /* Slightly tighter line height for impact */
+  text-shadow: 3px 3px 6px var(--shadow-dark);
+}
+body.light-mode .hero-section h1,
+body.light-mode .hero-section p {
+  color: var(--light-text-light); /* Make text readable on light hero overlay */
+  text-shadow: 1px 1px 2px var(--light-shadow-dark);
 }
 
 .hero-section p {
-  font-size: 1.4em; /* Larger paragraph text */
-  margin-bottom: 45px; /* More space below paragraph */
+  font-size: 1.4em;
+  margin-bottom: 45px;
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
   text-shadow: 2px 2px 4px var(--shadow-dark);
 }
 
+/* CTA Button Styling Enhancements */
 .cta-button {
-  display: inline-block;
+  display: inline-flex; /* Changed to inline-flex for better alignment */
+  align-items: center; /* Vertically center items */
+  justify-content: center; /* Horizontally center items */
+  gap: 10px; /* Space between text and spinner */
   background-color: var(--accent-blue);
   color: white;
-  padding: 20px 45px; /* Larger padding */
+  padding: 20px 45px;
   text-decoration: none;
-  border-radius: 12px; /* More rounded corners */
-  font-size: 1.3em; /* Larger font size */
-  font-weight: 700; /* Bold font */
+  border-radius: 12px;
+  font-size: 1.3em;
+  font-weight: 700;
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5); /* Enhanced shadow for button */
-  animation: pulseBlue 2s infinite ease-in-out; /* Subtle pulse animation */
+  box-shadow: 0 8px 20px var(--glow-blue);
+  animation: pulseBlue 2s infinite ease-in-out; /* Heartbeat animation */
+  position: relative;
+  overflow: hidden;
+  border: none; /* Ensure no default border */
+  cursor: pointer; /* Explicitly set cursor */
+  text-align: center; /* Fallback for text alignment */
 }
 
-/* Keyframes for button pulse animation */
+/* Keyframes for button pulse animation (Heartbeat) */
 @keyframes pulseBlue {
   0% {
-    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+    transform: scale(1);
+    box-shadow: 0 8px 20px var(--glow-blue);
   }
-  50% {
-    box-shadow: 0 8px 30px rgba(0, 123, 255, 0.8);
+  14% {
+    transform: scale(1.05); /* Slight enlarge */
+    box-shadow: 0 10px 25px var(--glow-blue);
+  }
+  28% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px var(--glow-blue);
+  }
+  42% {
+    transform: scale(1.05); /* Slight enlarge again */
+    box-shadow: 0 10px 25px var(--glow-blue);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px var(--glow-blue);
   }
   100% {
-    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+    transform: scale(1);
+    box-shadow: 0 8px 20px var(--glow-blue);
   }
 }
 
 .cta-button:hover {
   background-color: var(--accent-blue-hover);
-  transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(0, 123, 255, 0.7);
-  animation: none; /* Stop pulse on hover */
+  transform: translateY(-5px); /* Lift effect */
+  box-shadow: 0 12px 25px var(--glow-blue);
+  animation-play-state: paused; /* Stop heartbeat on hover */
+}
+
+.cta-button:active {
+  transform: translateY(-2px) scale(0.98); /* Simulate a press */
+  box-shadow: 0 4px 10px var(--glow-blue); /* Smaller shadow when pressed */
 }
 
 /* Section Common Styling */
@@ -327,29 +492,46 @@ p {
 .why-us-section,
 .contact-section,
 .projects-section {
-  padding: 100px 0; /* Increased section padding */
+  padding: 100px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative; /* Needed for pseudo-elements */
-  overflow: hidden; /* Hide overflow from subtle patterns */
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+body.light-mode .services-section,
+body.light-mode .why-us-section,
+body.light-mode .contact-section,
+body.light-mode .projects-section {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Alternating background colors for sections */
 .projects-section {
-  background-color: var(
-    --primary-bg-dark
-  ); /* Distinct background for projects */
+  background-color: var(--primary-bg);
+}
+body.light-mode .projects-section {
+  background-color: var(--light-primary-bg);
 }
 
 .services-section {
-  background-color: var(--secondary-bg-dark);
+  background-color: var(--secondary-bg);
+}
+body.light-mode .services-section {
+  background-color: var(--light-secondary-bg);
 }
 
 .why-us-section {
-  background-color: var(--primary-bg-dark); /* Alternating background */
+  background-color: var(--primary-bg);
+}
+body.light-mode .why-us-section {
+  background-color: var(--light-primary-bg);
 }
 
 .contact-section {
-  background-color: var(--secondary-bg-dark); /* Alternating background */
+  background-color: var(--secondary-bg);
+}
+body.light-mode .contact-section {
+  background-color: var(--light-secondary-bg);
 }
 
 /* Subtle pattern overlay for main content sections */
@@ -365,9 +547,16 @@ p {
   height: 100%;
   background-image: url('data:image/svg+xml,%3Csvg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="1" cy="1" r="1" fill="%23FFFFFF" opacity="0.03"%3E%3C/circle%3E%3C/svg%3E');
   background-repeat: repeat;
-  opacity: 0.8; /* Control visibility of the pattern */
-  z-index: 0; /* Keep it behind content */
-  pointer-events: none; /* Ensure it doesn't interfere with clicks */
+  opacity: 0.8;
+  z-index: 0;
+  pointer-events: none;
+}
+body.light-mode .services-section::before,
+body.light-mode .why-us-section::before,
+body.light-mode .contact-section::before,
+body.light-mode .projects-section::before {
+  background-image: url('data:image/svg+xml,%3Csvg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="1" cy="1" r="1" fill="%23000000" opacity="0.03"%3E%3C/circle%3E%3C/svg%3E');
+  opacity: 0.6;
 }
 
 /* Ensure content is above the pseudo-element pattern */
@@ -383,11 +572,17 @@ p {
 .why-us-section h2,
 .contact-section h2,
 .projects-section h2 {
-  font-size: 3.2em; /* Larger section headings */
-  margin-bottom: 60px; /* More space below headings */
+  font-size: 3.2em;
+  margin-bottom: 60px;
   color: var(--text-light);
   position: relative;
-  padding-bottom: 15px; /* Space for underline */
+  padding-bottom: 15px;
+}
+body.light-mode .services-section h2,
+body.light-mode .why-us-section h2,
+body.light-mode .contact-section h2,
+body.light-mode .projects-section h2 {
+  color: var(--light-text-light);
 }
 
 .services-section h2::after,
@@ -399,8 +594,8 @@ p {
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
-  width: 100px; /* Wider underline */
-  height: 5px; /* Thicker underline */
+  width: 100px;
+  height: 5px;
   background-color: var(--accent-blue);
   border-radius: 3px;
 }
@@ -411,51 +606,94 @@ p {
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 40px; /* Increased gap */
+  gap: 40px;
   margin-top: 50px;
 }
 
 .service-card,
 .why-us-card,
 .project-card {
-  background: var(--card-bg-dark);
-  padding: 40px; /* Increased padding */
-  border-radius: 20px; /* More rounded corners */
-  box-shadow: 0 8px 20px var(--shadow-light); /* Enhanced shadow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 20px;
+  /* More nuanced shadow */
+  box-shadow: 0 4px 6px var(--shadow-light), 0 10px 20px var(--shadow-dark);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease,
+    background-color 0.5s ease;
   text-align: center;
-  border: 2px solid transparent; /* Transparent border for hover effect */
+  border: 2px solid transparent;
+}
+body.light-mode .service-card,
+body.light-mode .why-us-card,
+body.light-mode .project-card {
+  /* Light mode adjusted shadows */
+  box-shadow: 0 2px 4px var(--light-shadow-light),
+    0 5px 10px var(--light-shadow-dark);
+}
+
+/* Card Pulse Hover Animation */
+@keyframes cardPulse {
+  0% {
+    transform: translateY(-15px) scale(1);
+    box-shadow: 0 15px 30px var(--shadow-dark);
+  }
+  50% {
+    transform: translateY(-17px) scale(1.01);
+    box-shadow: 0 18px 35px var(--glow-blue);
+  }
+  100% {
+    transform: translateY(-15px) scale(1);
+    box-shadow: 0 15px 30px var(--shadow-dark);
+  }
+}
+body.light-mode .service-card:hover,
+body.light-mode .why-us-card:hover,
+body.light-mode .project-card:hover {
+  box-shadow: 0 8px 16px var(--light-glow-blue);
 }
 
 .service-card:hover,
 .why-us-card:hover,
 .project-card:hover {
-  transform: translateY(-15px); /* More pronounced lift effect on hover */
-  box-shadow: 0 15px 30px var(--shadow-dark); /* Stronger shadow on hover */
-  border-color: var(--accent-blue); /* Blue border on hover */
+  animation: cardPulse 2s infinite ease-in-out; /* 2 ثواني عشان يبقى أبطأ وأسلس */
+  border-color: var(--accent-blue);
 }
 
 .service-card i,
 .why-us-card i {
-  font-size: 4em; /* Larger icons */
-  margin-bottom: 30px; /* More space below icons */
+  font-size: 4em;
+  margin-bottom: 30px;
   color: var(--accent-blue);
-  text-shadow: 0 0 15px rgba(0, 123, 255, 0.8); /* Stronger glow for icons */
+  text-shadow: 0 0 10px var(--glow-blue), 0 0 20px var(--glow-blue); /* Deeper glow */
+}
+body.light-mode .service-card i,
+body.light-mode .why-us-card i {
+  text-shadow: 0 0 8px var(--light-glow-blue);
 }
 
 .service-card h3,
 .why-us-card h3,
 .project-card h3 {
-  font-size: 2em; /* Larger card headings */
+  font-size: 2em;
   margin-bottom: 18px;
   color: var(--text-light);
+}
+body.light-mode .service-card h3,
+body.light-mode .why-us-card h3,
+body.light-mode .project-card h3 {
+  color: var(--light-text-light);
 }
 
 .service-card p,
 .why-us-card p,
 .project-card p {
-  font-size: 1.05em; /* Slightly larger card text */
+  font-size: 1.05em;
   color: var(--text-medium);
+}
+body.light-mode .service-card p,
+body.light-mode .why-us-card p,
+body.light-mode .project-card p {
+  color: var(--light-text-medium);
 }
 
 /* Project Card Specific Styling */
@@ -463,7 +701,10 @@ p {
   max-width: 100%;
   border-radius: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px var(--shadow-light);
+}
+body.light-mode .project-card img {
+  box-shadow: 0 2px 5px var(--light-shadow-light);
 }
 
 .project-card .project-link {
@@ -474,14 +715,17 @@ p {
   font-weight: 700;
   transition: color 0.3s ease, transform 0.3s ease;
 }
+body.light-mode .project-card .project-link {
+  color: var(--accent-blue);
+}
 
 .project-card .project-link:hover {
   color: var(--accent-blue-hover);
-  transform: translateX(5px); /* Slight slide effect on hover */
+  transform: translateX(5px);
 }
 
 .project-card .project-link i {
-  font-size: 0.9em; /* Smaller arrow icon */
+  font-size: 0.9em;
   margin-left: 5px;
   transition: transform 0.3s ease;
 }
@@ -492,43 +736,83 @@ p {
 
 /* Contact Section Styling */
 .contact-section {
-  background-color: var(
-    --secondary-bg-dark
-  ); /* Changed to secondary-bg-dark for alternating effect */
+  background-color: var(--secondary-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 100px 0;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+body.light-mode .contact-section {
+  background-color: var(--light-secondary-bg);
 }
 
 .contact-section p {
   max-width: 700px;
-  margin: 0 auto 50px auto; /* More space below paragraph */
+  margin: 0 auto 50px auto;
   color: var(--text-medium);
+}
+body.light-mode .contact-section p {
+  color: var(--light-text-medium);
 }
 
 .contact-form {
-  max-width: 650px; /* Slightly wider form */
+  max-width: 650px;
+  width: 100%;
   margin: 0 auto;
-  background: var(--card-bg-dark);
-  padding: 50px; /* Increased padding */
-  border-radius: 20px; /* More rounded corners */
-  box-shadow: 0 10px 25px var(--shadow-dark); /* Enhanced shadow */
+  background: var(--card-bg);
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px var(--shadow-dark);
   text-align: left;
+  box-sizing: border-box;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+body.light-mode .contact-form {
+  background: var(--light-card-bg);
+  box-shadow: 0 5px 15px var(--light-shadow-dark);
 }
 
 .contact-form input,
 .contact-form textarea {
-  width: calc(100% - 30px); /* Adjust width for padding */
-  padding: 18px; /* Larger padding for inputs */
-  margin-bottom: 25px; /* More space below inputs */
-  border: 1px solid #4a5568;
-  border-radius: 10px; /* More rounded corners for inputs */
-  background-color: var(--secondary-bg-dark);
+  width: calc(100% - 30px);
+  padding: 18px;
+  margin-bottom: 25px;
+  border: 1px solid var(--text-medium);
+  border-radius: 10px;
+  background-color: var(--primary-bg);
   color: var(--text-light);
-  font-size: 1.05em; /* Slightly larger font size */
+  font-size: 1.05em;
   box-sizing: border-box;
+  transition: background-color 0.5s ease, color 0.5s ease,
+    border-color 0.5s ease, box-shadow 0.3s ease; /* Added box-shadow to transition */
+}
+body.light-mode .contact-form input,
+body.light-mode .contact-form textarea {
+  border-color: var(--light-text-medium);
+  background-color: var(--light-primary-bg);
+  color: var(--light-text-light);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none; /* Remove default outline */
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px var(--glow-blue); /* Subtle glow on focus */
+}
+body.light-mode .contact-form input:focus,
+body.light-mode .contact-form textarea:focus {
+  box-shadow: 0 0 0 3px var(--light-glow-blue);
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
   color: var(--text-medium);
+}
+body.light-mode .contact-form input::placeholder,
+body.light-mode .contact-form textarea::placeholder {
+  color: var(--light-text-medium);
 }
 
 .contact-form textarea {
@@ -539,31 +823,41 @@ p {
   width: 100%;
   padding: 20px;
   font-size: 1.3em;
-  background-color: var(--accent-green); /* Green button for submit */
-  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.5); /* Enhanced shadow */
-  animation: pulseGreen 2s infinite ease-in-out; /* Subtle pulse animation */
-  position: relative; /* For loading spinner */
-  overflow: hidden; /* Hide spinner overflow */
+  background-color: var(--accent-green);
+  box-shadow: 0 8px 20px var(--glow-green);
+  animation: pulseGreen 2s infinite ease-in-out;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease;
+}
+body.light-mode .contact-form .cta-button {
+  box-shadow: 0 4px 10px var(--light-glow-green);
 }
 
 /* Keyframes for green button pulse animation */
 @keyframes pulseGreen {
   0% {
-    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.5);
+    box-shadow: 0 8px 20px var(--glow-green);
   }
   50% {
-    box-shadow: 0 8px 30px rgba(40, 167, 69, 0.8);
+    box-shadow: 0 8px 30px var(--glow-green);
   }
   100% {
-    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.5);
+    box-shadow: 0 8px 20px var(--glow-green);
   }
 }
 
 .contact-form .cta-button:hover {
   background-color: var(--accent-green-hover);
   transform: translateY(-5px);
-  box-shadow: 0 12px 25px rgba(40, 167, 69, 0.7);
-  animation: none; /* Stop pulse on hover */
+  box-shadow: 0 12px 25px var(--glow-green);
+  animation: none; /* توقف الـ pulse عند الـ hover */
+}
+
+.contact-form .cta-button:active {
+  transform: translateY(-2px) scale(0.98); /* Simulate a press */
+  box-shadow: 0 4px 10px var(--glow-green); /* Smaller shadow when pressed */
 }
 
 /* Loading Spinner for button */
@@ -577,17 +871,32 @@ p {
   display: inline-block;
   vertical-align: middle;
   margin-left: 10px;
-  opacity: 0; /* Hidden by default */
-  transition: opacity 0.3s ease;
+
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.cta-button .button-text {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: inline-block;
 }
 
 .cta-button.loading .spinner {
-  opacity: 1; /* Show spinner when loading */
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.cta-button.loading .button-text {
+  opacity: 0;
+  transform: scale(0);
 }
 
 .cta-button.loading {
   cursor: not-allowed;
-  pointer-events: none; /* Disable clicks during loading */
+  pointer-events: none;
 }
 
 @keyframes spin {
@@ -601,68 +910,91 @@ p {
 
 /* Footer Styling */
 .footer {
-  background-color: var(--secondary-bg-dark);
+  background-color: var(--secondary-bg);
   color: var(--text-medium);
   text-align: center;
-  padding: 30px 0; /* Increased padding */
+  padding: 30px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+body.light-mode .footer {
+  background-color: var(--light-secondary-bg);
+  color: var(--light-text-medium);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footer-contact-info {
+  margin-top: 15px;
+  font-size: 0.95em;
+  color: var(--text-medium);
+}
+body.light-mode .footer-contact-info {
+  color: var(--light-text-medium);
+}
+.footer-contact-info a {
+  color: var(--text-medium);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+body.light-mode .footer-contact-info a {
+  color: var(--light-text-medium);
+}
+.footer-contact-info a:hover {
+  color: var(--accent-blue);
 }
 
 .social-icons {
-  margin-top: 20px; /* Space above social icons */
+  margin-top: 20px;
 }
 
 .social-icons a {
-  color: var(--text-medium); /* Default icon color */
-  font-size: 1.8em; /* Icon size */
-  margin: 0 15px; /* Spacing between icons */
+  color: var(--text-medium);
+  font-size: 1.8em;
+  margin: 0 15px;
   transition: color 0.3s ease, transform 0.2s ease;
 }
+body.light-mode .social-icons a {
+  color: var(--light-text-medium); /* Default for light mode */
+}
 
+/* New: Hover effect for social icons in light mode */
 .social-icons a:hover {
-  color: var(--accent-blue); /* Blue on hover */
-  transform: translateY(-5px); /* Lift effect on hover */
-}
-
-/* Specific social icon colors on hover for a branded feel (optional) */
-.social-icons a .fa-facebook-f:hover {
-  color: #1877f2; /* Facebook blue */
-}
-.social-icons a .fa-x-twitter:hover {
-  color: #1da1f2; /* Twitter blue */
-}
-.social-icons a .fa-linkedin-in:hover {
-  color: #0a66c2; /* LinkedIn blue */
+  color: var(--accent-blue); /* Always blue on hover */
 }
 
 /* Custom Message Modal Styling */
 .message-modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 2000; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 2000;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(5px); /* Optional: blur background */
+  backdrop-filter: blur(5px);
 }
 
 .modal-content {
-  background-color: var(--card-bg-dark);
-  margin: 15% auto; /* 15% from the top and centered */
+  background-color: var(--card-bg);
+  margin: 15% auto;
   padding: 30px;
   border: 1px solid var(--accent-blue);
   border-radius: 15px;
-  width: 80%; /* Could be more responsive */
+  width: 80%;
   max-width: 400px;
   position: relative;
   text-align: center;
   box-shadow: 0 10px 30px var(--shadow-dark);
   animation: fadeIn 0.3s ease-out;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+body.light-mode .modal-content {
+  background-color: var(--light-card-bg);
+  box-shadow: 0 5px 15px var(--light-shadow-dark);
 }
 
 .modal-content.success {
@@ -670,13 +1002,36 @@ p {
 }
 
 .modal-content.error {
-  border-color: #dc3545; /* Red for error */
+  border-color: #dc3545;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body i.fas {
+  font-size: 3em;
+  margin-bottom: 15px;
+}
+
+.modal-body i.success-icon {
+  color: var(--accent-green);
+}
+
+.modal-body i.error-icon {
+  color: #dc3545; /* Red color for error */
 }
 
 .modal-content p {
   font-size: 1.2em;
   color: var(--text-light);
   margin-bottom: 0;
+}
+body.light-mode .modal-content p {
+  color: var(--light-text-light);
 }
 
 .close-button {
@@ -697,6 +1052,13 @@ p {
   text-decoration: none;
   cursor: pointer;
 }
+body.light-mode .close-button {
+  color: var(--light-text-medium);
+}
+body.light-mode .close-button:hover,
+body.light-mode .close-button:focus {
+  color: var(--light-text-light);
+}
 
 @keyframes fadeIn {
   from {
@@ -709,46 +1071,102 @@ p {
   }
 }
 
+/* --- New Animations for elements --- */
+/* For hero section text and button */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Delays for cascading entrance effect */
+.fade-in-up.delay-1 {
+  animation-delay: 0.2s;
+}
+.fade-in-up.delay-2 {
+  animation-delay: 0.4s;
+}
+.fade-in-up.delay-3 {
+  /* Added for the CTA button */
+  animation-delay: 0.6s;
+}
+
+/* For scroll reveal items (the cards/sections) */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(50px);
+  /* Changed to 'all' for smooth transitionDelay from JS */
+  transition: all 0.6s ease-out;
+}
+
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-content {
-    flex-direction: row; /* رجّعهم لـ row عشان زر الهامبرغر يكون جنب اللوجو */
-    justify-content: space-between; /* وزعهم */
-    align-items: center; /* وسّطهم رأسيًا */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .hamburger-menu {
-    display: block; /* اظهر زر الهامبرغر */
+    display: block; /* Show hamburger menu on small screens */
+    margin-left: 15px; /* Space it from theme toggle button */
   }
 
+  /* Hide main navigation on small screens */
   .navbar {
-    position: fixed;
+    display: none;
+    position: fixed; /* For side navigation */
     top: 0;
-    right: -250px; /* اخفيه على اليمين - عرض القائمة 250px */
-    width: 250px; /* عرض الـ side navbar */
+    right: -250px;
+    width: 250px;
     height: 100%;
-    background-color: var(--secondary-bg-dark); /* لون خلفية الـ side navbar */
-    padding-top: 80px; /* مسافة من فوق عشان اللوجو/الزرار */
+    background-color: var(--secondary-bg);
+    padding-top: 80px;
     box-shadow: -5px 0 15px var(--shadow-dark);
-    transition: right 0.3s ease-in-out; /* حركة فتح/غلق سلسة */
-    z-index: 1000; /* فوق الـ overlay */
-    overflow-y: auto; /* لو المحتوى كتير */
+    transition: right 0.3s ease-in-out, background-color 0.5s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  body.light-mode .navbar {
+    background-color: var(--light-secondary-bg);
+    box-shadow: -5px 0 15px var(--light-shadow-dark);
   }
 
   .navbar.active {
-    right: 0; /* ظهره لما يبقى active */
+    right: 0; /* Slide in when active */
+    display: flex; /* Make it flex column when active */
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
   .navbar ul {
     flex-direction: column;
-    align-items: flex-start; /* رجّع العناصر لليسار */
+    align-items: flex-start;
     width: 100%;
   }
 
   .navbar ul li {
-    margin: 0; /* شيل المسافات الأفقية */
+    margin: 0;
     width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* خط فاصل بين العناصر */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  body.light-mode .navbar ul li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   .navbar ul li:last-child {
@@ -756,15 +1174,28 @@ p {
   }
 
   .navbar a {
-    display: block; /* خلي الروابط تأخذ المساحة كلها للضغط عليها بسهولة */
-    padding: 15px 20px; /* مسافة داخلية للروابط */
-    font-size: 1.2em; /* كبّر الخط شوية */
-    color: var(--text-light); /* خلي لون الروابط أفتح في الـ side navbar */
+    display: block;
+    padding: 15px 20px;
+    font-size: 1.2em;
+    color: var(--text-light);
+  }
+  body.light-mode .navbar a {
+    color: var(--light-text-light);
   }
 
   .navbar a:hover {
-    background-color: var(--card-bg-dark); /* غير الخلفية عند الـ hover */
+    background-color: var(--card-bg);
     color: var(--accent-blue);
+  }
+  body.light-mode .navbar a:hover {
+    background-color: var(--light-card-bg);
+  }
+
+  /* Make sure theme toggle button is visible and responsive */
+  .theme-toggle-button {
+    font-size: 1.2em;
+    margin-right: 15px;
+    margin-left: auto; /* Push it to the right before hamburger */
   }
 
   /* Prevent scrolling when the side menu is open */
@@ -772,12 +1203,17 @@ p {
     overflow: hidden;
   }
 
+  .syscraft-branding {
+    font-size: 4em; /* Adjust for smaller screens */
+    margin-bottom: 15px;
+  }
+
   .hero-section h1 {
-    font-size: 2.8em; /* Adjusted for smaller screens */
+    font-size: 2.8em;
   }
 
   .hero-section p {
-    font-size: 1.1em; /* Adjusted for smaller screens */
+    font-size: 1.1em;
   }
 
   .cta-button {
@@ -834,6 +1270,10 @@ p {
     padding: 25px 10px;
   }
 
+  .syscraft-branding {
+    font-size: 2.8em; /* Further adjust for very small screens */
+  }
+
   .hero-section h1 {
     font-size: 2.2em;
   }
@@ -843,7 +1283,7 @@ p {
   }
 
   .social-icons a {
-    font-size: 1.5em; /* Smaller icons on very small screens */
+    font-size: 1.5em;
     margin: 0 10px;
   }
 }
