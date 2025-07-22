@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SYSCRAFT Technology - Integrated Network Solutions</title>
     <link rel="stylesheet" href="style.css" />
-    <!-- Google Fonts: Poppins for headings, Lato for body text -->
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Font Awesome Icons CDN -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
   </head>
-  <body>
+  <body id="website-body">
     <header class="header" id="main-navbar">
       <div class="container header-content">
         <a href="#" class="logo-link">
@@ -26,33 +24,56 @@
             class="logo"
           />
         </a>
-        <nav class="navbar">
+
+        <nav class="navbar" id="main-nav">
           <ul>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#contact">Contact Us</a></li>
           </ul>
         </nav>
+
+        <button
+          id="theme-toggle"
+          class="theme-toggle-button"
+          aria-label="Toggle light and dark mode"
+        >
+          <i class="fas fa-moon"></i>
+        </button>
+
+        <button class="hamburger-menu" aria-label="Open navigation menu">
+          <i class="fas fa-bars"></i>
+        </button>
       </div>
     </header>
 
+    <div class="overlay" id="nav-overlay"></div>
+
     <section class="hero-section">
+      <video autoplay muted loop playsinline class="hero-video-background">
+        <source src="video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
       <div class="hero-overlay">
         <div class="container hero-content-wrapper">
-          <h1>
+          <h2 class="syscraft-branding fade-in-up">SYSCRAFT Technology</h2>
+          <h1 class="fade-in-up delay-1">
             Integrated Network Solutions Unleashing Your Business Potential
           </h1>
-          <p>
+          <p class="fade-in-up delay-2">
             We provide the latest technologies and innovative solutions to meet
             your network infrastructure needs, enhancing its efficiency and
             security.
           </p>
-          <a href="#contact" class="cta-button">Contact Us Now</a>
+          <a href="#contact" class="cta-button fade-in-up delay-3"
+            ><span class="button-text">Contact Us Now</span>
+            <span class="spinner"></span
+          ></a>
         </div>
       </div>
     </section>
 
-    <!-- New Projects Section -->
     <section id="projects" class="projects-section reveal-item">
       <div class="container">
         <h2>Our Latest Projects</h2>
@@ -216,7 +237,8 @@
             required
           ></textarea>
           <button type="submit" class="cta-button" id="submit-button">
-            Send Message
+            <span class="button-text">Send Message</span>
+            <span class="spinner"></span>
           </button>
         </form>
       </div>
@@ -225,6 +247,10 @@
     <footer class="footer">
       <div class="container">
         <p>&copy; 2023 SYSCRAFT Technology. All rights reserved.</p>
+        <p class="footer-contact-info">
+          Email: <a href="mailto:info@syscraft.com">info@syscraft.com</a> |
+          Phone: <a href="tel:+1234567890">+123 456 7890</a>
+        </p>
         <div class="social-icons">
           <a
             href="https://www.facebook.com/yourcompany"
@@ -248,11 +274,13 @@
       </div>
     </footer>
 
-    <!-- Custom Message Modal/Box -->
     <div id="message-modal" class="message-modal">
       <div class="modal-content">
         <span class="close-button">&times;</span>
-        <p id="modal-message"></p>
+        <div class="modal-body">
+          <i id="modal-icon" class="fas"></i>
+          <p id="modal-message"></p>
+        </div>
       </div>
     </div>
 
